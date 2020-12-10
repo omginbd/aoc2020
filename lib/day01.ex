@@ -18,7 +18,11 @@ defmodule Aoc.Day01 do
 
   defp find_summing_numbers([], _num), do: nil
 
-  def part2(filename) do
+  @doc """
+  iex> Aoc.Day01.part2
+  276912720
+  """
+  def part2(filename \\ "input01.txt") do
     {first, {second, third}} = filename
     |> get_lines
     |> Enum.map(&String.to_integer/1)
