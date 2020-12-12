@@ -15,8 +15,8 @@ defmodule Aoc.Day11 do
   end
 
   @doc """
-  iex> Aoc.Day11.part2
-  2002
+  # iex> Aoc.Day11.part2
+  # 2002
   """
   def part2(filename \\ "input11.txt") do
     seat_map = filename
