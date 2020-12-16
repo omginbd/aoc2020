@@ -8,6 +8,7 @@ defmodule AocTest do
   doctest Aoc.Day13
   doctest Aoc.Day14, import: true
   doctest Aoc.Day15, import: true
+  doctest Aoc.Day16, import: true
 
   test "greets the world" do
     assert Aoc.hello() == :world

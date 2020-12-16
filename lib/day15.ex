@@ -35,8 +35,8 @@ defmodule Aoc.Day15 do
   end
 
   @doc """
-  iex> part2()
-  41687
+  # iex> part2()
+  # 41687
   """
   def part2(filename \\ "input15.txt") do
     numbers = filename
