@@ -38,7 +38,7 @@ defmodule Aoc.Day10 do
       |> Enum.sort(:desc)
       |> build_path_map(%{})
 
-    {:ok, memo_agent} = Agent.start_link fn -> %{} end
+    {:ok, memo_agent} = Agent.start_link(fn -> %{} end)
     count_distinct_paths(path_map, Enum.max(Map.keys(path_map)), memo_agent)
   end
 
@@ -97,12 +97,14 @@ defmodule Aoc.Day10 do
   def count_distinct_paths(_, 0, _), do: 1
 
   def count_distinct_paths(path_map, cur_key, memo_agent) do
-    case Agent.get(memo_agent, &(Map.get(&1, cur_key))) do
+    case Agent.get(memo_agent, &Map.get(&1, cur_key)) do
       nil ->
-        sum = path_map
-        |> Map.get(cur_key)
-        |> Enum.map(&(count_distinct_paths(path_map, &1, memo_agent)))
-        |> Enum.sum()
+        sum =
+          path_map
+          |> Map.get(cur_key)
+          |> Enum.map(&count_distinct_paths(path_map, &1, memo_agent))
+          |> Enum.sum()
+
         Agent.update(memo_agent, fn map -> Map.put(map, cur_key, sum) end)
         sum
 

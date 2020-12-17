@@ -12,8 +12,9 @@ defmodule Aoc.Day15 do
   249
   """
   def part1(filename \\ "input15.txt") do
-    numbers = filename
-    |> parse
+    numbers =
+      filename
+      |> parse
 
     numbers
     |> Enum.with_index(1)
@@ -22,15 +23,19 @@ defmodule Aoc.Day15 do
   end
 
   def play_game(last_turn_map, last_num, cur_turn, final_turn)
+
   def play_game(_, last_num, final_turn, final_turn) do
     last_num
   end
+
   def play_game(last_turn_map, last_num, cur_turn, final_turn) do
-    last_turn = case Map.get(last_turn_map, last_num, 0) do
-      ^cur_turn -> 0
-      0 -> 0
-      n -> cur_turn - n
-    end
+    last_turn =
+      case Map.get(last_turn_map, last_num, 0) do
+        ^cur_turn -> 0
+        0 -> 0
+        n -> cur_turn - n
+      end
+
     play_game(Map.put(last_turn_map, last_num, cur_turn), last_turn, cur_turn + 1, final_turn)
   end
 
@@ -39,8 +44,9 @@ defmodule Aoc.Day15 do
   # 41687
   """
   def part2(filename \\ "input15.txt") do
-    numbers = filename
-    |> parse
+    numbers =
+      filename
+      |> parse
 
     numbers
     |> Enum.with_index(1)

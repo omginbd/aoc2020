@@ -73,10 +73,10 @@ defmodule Aoc.Day16 do
     possible_field_positions = for i <- 0..(Enum.count(my_ticket) - 1), into: %{}, do: {i, fields}
 
     find_field_positions(valid_tickets, possible_field_positions)
-    |> Enum.filter(&(String.contains?(elem(&1, 0), "departure")))
+    |> Enum.filter(&String.contains?(elem(&1, 0), "departure"))
     |> Enum.map(fn {_, i} -> Enum.at(my_ticket, i) end)
     |> Enum.scan(&Kernel.*/2)
-    |> List.last
+    |> List.last()
   end
 
   def filter_invalid_ticket(ticket, ranges) do

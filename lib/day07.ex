@@ -6,7 +6,7 @@ defmodule Aoc.Day07 do
     |> get_lines()
     |> build_rule_map
     |> find_containing_bags(["shiny gold"])
-    |> Enum.count
+    |> Enum.count()
   end
 
   def part2(filename \\ "input07.txt") do
@@ -20,15 +20,20 @@ defmodule Aoc.Day07 do
 
   def build_rule_map([head | tail], rule_map) do
     [_, parent_color, contains] = Regex.run(~r/(\w+ \w+) bags contain (.+)\./, head)
+
     case contains do
-      "no other bags" -> build_rule_map(tail, Map.put(rule_map, parent_color, []))
+      "no other bags" ->
+        build_rule_map(tail, Map.put(rule_map, parent_color, []))
+
       _ ->
-        children = contains
-        |> String.split(",", trim: true)
-        |> Enum.map(fn child ->
-          [_, num, color] = Regex.run(~r/(\d+) (\w+ \w+)/, child)
-          {String.to_integer(num), color}
-        end)
+        children =
+          contains
+          |> String.split(",", trim: true)
+          |> Enum.map(fn child ->
+            [_, num, color] = Regex.run(~r/(\d+) (\w+ \w+)/, child)
+            {String.to_integer(num), color}
+          end)
+
         build_rule_map(tail, Map.put(rule_map, parent_color, children))
     end
   end
@@ -36,13 +41,15 @@ defmodule Aoc.Day07 do
   def build_rule_map([], rule_map), do: rule_map
 
   def find_containing_bags(rule_map, colors_to_find) do
-    found_colors = rule_map
-    |> Map.keys()
-    |> Enum.filter(fn parent_color ->
-      children = Map.get(rule_map, parent_color, []) |> Enum.map(fn {_, color} -> color end)
-      without_search = children -- colors_to_find
-      Enum.count(children) > Enum.count(without_search)
-    end)
+    found_colors =
+      rule_map
+      |> Map.keys()
+      |> Enum.filter(fn parent_color ->
+        children = Map.get(rule_map, parent_color, []) |> Enum.map(fn {_, color} -> color end)
+        without_search = children -- colors_to_find
+        Enum.count(children) > Enum.count(without_search)
+      end)
+
     case found_colors -- colors_to_find do
       [] -> found_colors
       _ -> find_containing_bags(rule_map, found_colors ++ colors_to_find)
@@ -50,6 +57,7 @@ defmodule Aoc.Day07 do
   end
 
   def count_children(rule_map, parent_color)
+
   def count_children(rule_map, parent_color) do
     rule_map
     |> Map.get(parent_color, [])

@@ -20,6 +20,7 @@ defmodule Aoc.Day03 do
   end
 
   defp build_tree_map(lines, y \\ 0, tree_map \\ %{})
+
   defp build_tree_map([head | tail], y, tree_map) do
     {_, new_tree_map} =
       head
@@ -30,12 +31,15 @@ defmodule Aoc.Day03 do
           _ -> {x + 1, trees}
         end
       end)
+
     build_tree_map(tail, y + 1, new_tree_map)
   end
+
   defp build_tree_map([], _, tree_map), do: tree_map
 
   defp traverse(map, velocity, pos \\ {0, 0}, trees_hit \\ 0)
   defp traverse({_, _, max_y}, _, {_, y}, trees_hit) when y > max_y, do: trees_hit
+
   defp traverse({tree_map, max_x, max_y}, {dx, dy}, {x, y}, trees_hit) do
     {new_x, new_y} = {x + dx, y + dy}
     looped_pos = {rem(new_x, max_x + 1), new_y}

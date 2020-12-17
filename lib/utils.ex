@@ -4,9 +4,10 @@ defmodule Aoc.Utils do
   end
 
   def get_lines(filename, split_char \\ "\n")
+
   def get_lines(filename, split_char) do
     filename
-    |> File.read!
+    |> File.read!()
     |> String.split(split_char)
   end
 end

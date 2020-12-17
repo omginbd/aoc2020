@@ -21,7 +21,7 @@ defmodule Aoc.Day06 do
       |> Enum.filter(&(&1 === group_total))
       |> Enum.count()
     end)
-    |> Enum.sum
+    |> Enum.sum()
   end
 
   def get_group_questions(list, yes_map \\ %{})

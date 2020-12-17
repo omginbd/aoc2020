@@ -49,6 +49,7 @@ defmodule Aoc.Day09 do
 
   def test_start(numbers, [head | tail], num_to_find) do
     new_numbers = [head | numbers]
+
     case Enum.sum(new_numbers) do
       n when n > num_to_find -> nil
       n when n < num_to_find -> test_start(new_numbers, tail, num_to_find)

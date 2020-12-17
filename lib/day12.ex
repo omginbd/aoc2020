@@ -23,13 +23,14 @@ defmodule Aoc.Day12 do
   63447
   """
   def part2(filename \\ "input12.txt") do
-    {_, {x, y}} = filename
-    |> get_lines
-    |> Enum.map(fn line ->
-      [_, command, value] = Regex.run(~r/(\w)(\d+)/, line)
-      {command, String.to_integer(value)}
-    end)
-    |> follow_waypoint_navigation
+    {_, {x, y}} =
+      filename
+      |> get_lines
+      |> Enum.map(fn line ->
+        [_, command, value] = Regex.run(~r/(\w)(\d+)/, line)
+        {command, String.to_integer(value)}
+      end)
+      |> follow_waypoint_navigation
 
     abs(x) + abs(y)
   end
@@ -97,22 +98,26 @@ defmodule Aoc.Day12 do
   end
 
   def follow_waypoint_navigation([{"L", value} | tail], {wx, wy}, ship_pos) do
-    new_waypoint_pos = value
-    |> case do
-      90 -> {-1 * wy, wx}
-      180 -> {-1 * wx, -1 * wy}
-      270 -> {wy, -1 * wx}
-    end
+    new_waypoint_pos =
+      value
+      |> case do
+        90 -> {-1 * wy, wx}
+        180 -> {-1 * wx, -1 * wy}
+        270 -> {wy, -1 * wx}
+      end
+
     follow_waypoint_navigation(tail, new_waypoint_pos, ship_pos)
   end
 
   def follow_waypoint_navigation([{"R", value} | tail], {wx, wy}, ship_pos) do
-    new_waypoint_pos = value
-    |> case do
-      270 -> {-1 * wy, wx}
-      180 -> {-1 * wx, -1 * wy}
-      90 -> {wy, -1 * wx}
-    end
+    new_waypoint_pos =
+      value
+      |> case do
+        270 -> {-1 * wy, wx}
+        180 -> {-1 * wx, -1 * wy}
+        90 -> {wy, -1 * wx}
+      end
+
     follow_waypoint_navigation(tail, new_waypoint_pos, ship_pos)
   end
 

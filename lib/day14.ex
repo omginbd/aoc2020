@@ -108,14 +108,15 @@ defmodule Aoc.Day14 do
     base_val = base_val |> String.to_integer(2)
 
     x_pos_list
-      |> Enum.map(&(:math.pow(2, &1) |> floor))
-      |> get_permutations([0])
-      |> Enum.map(&(base_val + &1))
+    |> Enum.map(&(:math.pow(2, &1) |> floor))
+    |> get_permutations([0])
+    |> Enum.map(&(base_val + &1))
   end
 
   def get_permutations([head | tail], list_so_far) do
     new_list = for a <- [0, head], b <- list_so_far, do: a + b
     get_permutations(tail, Enum.uniq(new_list))
   end
+
   def get_permutations([], list_so_far), do: list_so_far
 end

@@ -19,14 +19,17 @@ defmodule Aoc.Day11 do
   # 2002
   """
   def part2(filename \\ "input11.txt") do
-    seat_map = filename
-    |> get_lines()
-    |> build_seat_map()
-    neighbor_map = seat_map
-    |> Map.keys
-    |> Enum.reduce(%{}, fn coords, acc ->
-      Map.put(acc, coords, get_visible_neighbors(coords, seat_map))
-    end)
+    seat_map =
+      filename
+      |> get_lines()
+      |> build_seat_map()
+
+    neighbor_map =
+      seat_map
+      |> Map.keys()
+      |> Enum.reduce(%{}, fn coords, acc ->
+        Map.put(acc, coords, get_visible_neighbors(coords, seat_map))
+      end)
 
     {seat_map, neighbor_map}
     |> iterate_til_stable_2()
@@ -144,11 +147,11 @@ defmodule Aoc.Day11 do
       if Map.get(old_seat_map, coords) === "." do
         {changed_coords, Map.put(new_seat_map, coords, ".")}
       else
-        neighbors = Map.get(neighbor_map, coords)
-        |> Enum.map(&(Map.get(old_seat_map, &1)))
+        neighbors =
+          Map.get(neighbor_map, coords)
+          |> Enum.map(&Map.get(old_seat_map, &1))
 
-        new_val =
-          eval_seat(Map.get(old_seat_map, coords), neighbors, 5)
+        new_val = eval_seat(Map.get(old_seat_map, coords), neighbors, 5)
 
         if new_val === Map.get(old_seat_map, coords),
           do: {changed_coords, Map.put(new_seat_map, coords, new_val)},
@@ -184,7 +187,7 @@ defmodule Aoc.Day11 do
 
   def find_nearest_neighbor_in_direction(_, {row, col}, _, num_rows, num_cols)
       when row not in 0..num_rows or col not in 0..num_cols,
-      do: :nil
+      do: nil
 
   def find_nearest_neighbor_in_direction(seat_map, {row, col}, {dx, dy}, num_rows, num_cols) do
     case Map.get(seat_map, {row, col}) do
@@ -197,7 +200,8 @@ defmodule Aoc.Day11 do
           num_cols
         )
 
-      _ -> {row, col}
+      _ ->
+        {row, col}
     end
   end
 end
